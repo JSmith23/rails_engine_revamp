@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "Merchants API" do
+describe "Customers API" do
 
   it "gets a list of customers" do
     create_list(:customer, 3)
@@ -180,9 +180,11 @@ describe "Merchants API" do
   it "returns a collection of transactions associated with a customer" do
     merch = create(:merchant, id: 1)
     customer = create(:customer, id: 1)
-    invoice_1 = create(:invoice, merchant_id: 1, customer_id: 1)
-    invoice_2 = create(:invoice, merchant_id: 1, customer_id: 1)
-    invoice_3 = create(:invoice, merchant_id: 1, customer_id: 1)
+    invoice = create(:invoice, customer_id: 1, merchant_id: 1)
+    transaction_1 = create(:transaction, invoice_id: invoice.id)
+    transaction_2 = create(:transaction, invoice_id: invoice.id)
+    transaction_3 = create(:transaction, invoice_id: invoice.id)
+
 
     get "/api/v1/customers/#{merch.id}/transactions"
 
