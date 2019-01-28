@@ -1,7 +1,9 @@
 class ItemSerializer
   include FastJsonapi::ObjectSerializer
-  attributes :name, :description, :unit_price, :merchant_id
-
+  attributes :id, :name, :description, :merchant_id
+  attribute :unit_price do |object|
+    (object.unit_price / 100.00).to_s
+  end
   has_many :invoice_items
   belongs_to :merchant
 end
