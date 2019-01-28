@@ -10,6 +10,6 @@ class Api::V1::Customers::SearchController < ApplicationController
   private
 
   def look_params
-    params.permit(:first_name, :last_name)
+    params.permit(:id,:first_name, :last_name, :created_at, :updated_at)
   end
 end

@@ -145,34 +145,40 @@ describe "Invoice API" do
     expect(invoice["data"][2]["attributes"]["status"]).to eq(status)
   end
 
-  xit "can find all invoices by created_at" do
-    invoice_1 = create(:invoice, merchant_id: 1, customer_id: 1, created_at: Time.now)
-    invoice_2 = create(:invoice, merchant_id: 1, customer_id: 1, created_at: Time.now)
-    invoice_3 = create(:invoice, merchant_id: 1, customer_id: 1, created_at: Time.now)
+  it "can find all invoices by created_at" do
+    invoice_1 = create(:invoice, merchant_id: 1, customer_id: 1)
+    invoice_2 = create(:invoice, merchant_id: 1, customer_id: 1)
+    invoice_3 = create(:invoice, merchant_id: 1, customer_id: 1)
     created_at = invoice_1.created_at
+    id_1 = invoice_1.id
+    id_2 = invoice_2.id
+    id_3 = invoice_3.id
 
     get "/api/v1/invoices/find_all?created_at=#{created_at}"
 
     invoice = JSON.parse(response.body)
     expect(response).to be_successful
-    expect(invoice["data"][0]["attributes"]["created_at"]).to eq(Time.now)
-    expect(invoice["data"][1]["attributes"]["created_at"]).to eq(Time.now)
-    expect(invoice["data"][2]["attributes"]["created_at"]).to eq(Time.now)
+    expect(invoice["data"][0]["id"]).to eq(id_1.to_s)
+    expect(invoice["data"][1]["id"]).to eq(id_2.to_s)
+    expect(invoice["data"][2]["id"]).to eq(id_3.to_s)
   end
 
-  xit "can find all invoices by updated_at" do
-    invoice_1 = create(:invoice, merchant_id: 1, customer_id: 1, updated_at: "2012-03-27 14:53:59 UTC")
-    invoice_2 = create(:invoice, merchant_id: 1, customer_id: 1, updated_at: "2012-03-27 14:53:59 UTC")
-    invoice_3 = create(:invoice, merchant_id: 1, customer_id: 1, updated_at: "2012-03-27 14:53:59 UTC")
+  it "can find all invoices by updated_at" do
+    invoice_1 = create(:invoice, merchant_id: 1, customer_id: 1)
+    invoice_2 = create(:invoice, merchant_id: 1, customer_id: 1)
+    invoice_3 = create(:invoice, merchant_id: 1, customer_id: 1)
     updated_at = invoice_1.updated_at
+    id_1 = invoice_1.id
+    id_2 = invoice_2.id
+    id_3 = invoice_3.id
 
     get "/api/v1/invoices/find_all?updated_at=#{updated_at}"
 
     invoice = JSON.parse(response.body)
     expect(response).to be_successful
-    expect(invoice["data"][0]["attributes"]["updated_at"]).to eq(updated_at)
-    expect(invoice["data"][1]["attributes"]["updated_at"]).to eq(updated_at)
-    expect(invoice["data"][2]["attributes"]["updated_at"]).to eq(updated_at)
+    expect(invoice["data"][0]["id"]).to eq(id_1.to_s)
+    expect(invoice["data"][1]["id"]).to eq(id_2.to_s)
+    expect(invoice["data"][2]["id"]).to eq(id_3.to_s)
   end
 
   it "returns a random invoice" do
